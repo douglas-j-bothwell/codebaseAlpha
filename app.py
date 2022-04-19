@@ -3,4 +3,4 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'codebaseAlpha 1.0.43 says Hello, Docker!'
+    return 'codebaseAlpha 1.0.44 says Hello, Docker!'
