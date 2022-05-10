@@ -1,0 +1,23 @@
+connector:
+  name: douglas-j-bothwell-github
+  identifier: douglasjbothwellgithub
+  description:
+  orgIdentifier: default
+  projectIdentifier: DougGitExpExample
+  type: Github
+  spec:
+    url: https://github.com/douglas-j-bothwell
+    validationRepo: codebaseAlpha
+    authentication:
+      type: Http
+      spec:
+        type: UsernameToken
+        spec:
+          username: douglas-j-bothwell
+          tokenRef: douglasjbothwellgithubpat
+    apiAccess:
+      type: Token
+      spec:
+        tokenRef: douglasjbothwellgithubpat
+    executeOnDelegate: true
+    type: Account
