@@ -20,3 +20,5 @@ CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 this is equivalent to running:
 
 python3 -m flask run --host=0.0.0.0
+
+3.0.2
