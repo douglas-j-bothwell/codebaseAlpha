@@ -1,0 +1,36 @@
+pipeline:
+    name: newpipeline
+    identifier: newpipeline
+    projectIdentifier: DougGitExpExample
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: douglasjbothwellgithub
+                repoName: codebaseAlpha
+                build: <+input>
+    stages:
+        - stage:
+              name: helloworld
+              identifier: helloworld
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.docexample
+                          namespace: default
+                          automountServiceAccountToken: true
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: example
+                                identifier: example
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: sample
+                                    shell: Sh
+                                    command: echo test
