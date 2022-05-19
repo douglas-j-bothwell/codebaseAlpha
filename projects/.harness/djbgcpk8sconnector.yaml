@@ -1,0 +1,12 @@
+connector:
+  name: djb-gcp-k8s-connector
+  identifier: djbgcpk8sconnector
+  description:
+  orgIdentifier: default
+  projectIdentifier: DougGitExpExample
+  type: K8sCluster
+  spec:
+    credential:
+      type: InheritFromDelegate
+    delegateSelectors:
+    - gcpdocplay
