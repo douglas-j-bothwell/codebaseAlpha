@@ -14,7 +14,6 @@ pipeline:
         - stage:
               name: helloworld
               identifier: helloworld
-              description: ""
               type: CI
               spec:
                   cloneCodebase: true
