@@ -20,8 +20,10 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: examplek8
-                          namespace: example-delegate-new
+                          connectorRef: account.docexample
+                          namespace: default
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
                   execution:
                       steps:
                           - step:
@@ -29,6 +31,7 @@ pipeline:
                                 name: example
                                 identifier: example
                                 spec:
-                                    connectorRef: exampledocker
-                                    image: sample
+                                    connectorRef: account.harnessImage
+                                    image: alpine:latest
+                                    shell: Sh
                                     command: echo test
