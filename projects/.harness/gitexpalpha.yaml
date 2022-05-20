@@ -27,7 +27,7 @@ pipeline:
                       steps:
                           - step:
                                 type: BuildAndPushDockerRegistry
-                                name: Build and Push Alpha
+                                name: my-github-personal-access-token
                                 identifier: Build_and_Push_Beta
                                 spec:
                                     connectorRef: dbothwelldockerhub
