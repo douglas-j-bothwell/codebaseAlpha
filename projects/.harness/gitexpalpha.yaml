@@ -12,7 +12,7 @@ pipeline:
                 build: <+input>
     stages:
         - stage:
-              name: Build AlphaOne
+              name: Build BetaOne
               identifier: Build_Beta
               type: CI
               spec:
