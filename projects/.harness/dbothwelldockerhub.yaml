@@ -1,0 +1,15 @@
+connector:
+  name: dbothwell-dockerhub
+  identifier: dbothwelldockerhub
+  description:
+  orgIdentifier: default
+  projectIdentifier: DougGitExpExample
+  type: DockerRegistry
+  spec:
+    dockerRegistryUrl: https://index.docker.io/v1/
+    providerType: DockerHub
+    auth:
+      type: UsernamePassword
+      spec:
+        username: dbothwell
+        passwordRef: dbothwelldockerhubpat
