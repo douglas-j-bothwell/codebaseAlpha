@@ -1,0 +1,126 @@
+pipeline:
+    name: gitExpAlpha
+    identifier: gitexpalpha
+    projectIdentifier: DougGitExpExample
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: djbgithubaccount
+                repoName: codebaseAlpha
+                build: <+input>
+    stages:
+        - stage:
+              name: Build AlphaOne
+              identifier: Build_Beta
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: dbothwellciquickstart
+                          namespace: harness-delegate-ng
+                          automountServiceAccountToken: true
+                  execution:
+                      steps:
+                          - step:
+                                type: BuildAndPushDockerRegistry
+                                name: Build and Push Alpha
+                                identifier: Build_and_Push_Beta
+                                spec:
+                                    connectorRef: dbothwelldockerhub
+                                    repo: dbothwell/myalphaservice
+                                    tags:
+                                        - latest
+                                        - <+trigger.sourceBranch>
+                          - step:
+                                type: Run
+                                name: echo-trigger-vars-alpha
+                                identifier: echotriggervarsbeta
+                                spec:
+                                    connectorRef: dbothwelldockerhub
+                                    image: alpine:latest
+                                    shell: Sh
+                                    command: |-
+                                        echo "PR and Issue Trigger variables:"
+                                        echo <+trigger.targetBranch>
+                                        echo <+trigger.sourceBranch>
+                                        echo <+trigger.prNumber>
+                                        echo <+trigger.prTitle>
+                                        echo <+trigger.gitUser>
+                                        echo <+trigger.repoUrl>
+                                        echo <+trigger.commitSha>
+                                        echo <+trigger.baseCommitSha>
+                                        echo <+trigger.event>
+                                        echo ""
+                                        echo "Push Trigger variables:"
+                                        echo <+trigger.targetBranch>
+                                        echo <+trigger.gitUser>
+                                        echo <+trigger.repoUrl>
+                                        echo <+trigger.commitSha>
+                                        echo <+trigger.event>
+                                        echo ""
+                                        echo "Trigger header:"
+                                        echo <+trigger.header>
+                                        echo ""
+                                        echo "Trigger payload:"
+                                        echo <+trigger.payload>
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - AllErrors
+                                          action:
+                                              type: MarkAsSuccess
+                          - step:
+                                type: Run
+                                name: echo-codebase-vars-alpha
+                                identifier: echocodebasevarsbeta
+                                spec:
+                                    connectorRef: dbothwelldockerhub
+                                    image: alpine:latest
+                                    shell: Sh
+                                    command: |-
+                                        echo "Codebase variables from Triggers -- Webhook Event and PR Webhook Event"
+                                        echo <+codebase.branch>
+                                        echo <+codebase.tag>
+                                        echo <+codebase.commitSha>
+                                        echo <+codebase.targetBranch>
+                                        echo <+codebase.repoUrl>
+                                        echo <+codebase.gitUserId>
+                                        echo <+codebase.gitUserEmail>
+                                        echo <+codebase.gitUser>
+                                        echo <+codebase.gitUserAvatar>
+
+                                        echo "Codebase variables from Triggers -- PR Webhook Event"
+                                        echo <+codebase.sourceBranch>
+                                        echo <+codebase.prNumber>
+                                        echo <+codebase.prTitle>
+                                        echo <+codebase.baseCommitSha>
+                                        echo <+codebase.commitRef>
+                                        echo <+codebase.pullRequestLink>
+                                        echo <+codebase.pullRequestBody>
+                                        echo <+codebase.state>
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - AllErrors
+                                          action:
+                                              type: MarkAsSuccess
+              variables:
+                  - name: DOCKERHUB_USERNAME
+                    type: String
+                    value: dbothwell
+                  - name: DOCKERHUB_PAT
+                    type: Secret
+                    value: dbothwelldockerhubpat
+                  - name: GITHUB_USERNAME
+                    type: String
+                    value: douglas-j-bothwell
+                  - name: GITHUB_REPO
+                    type: String
+                    value: codebaseAlpha
+                  - name: DOCKER_IMAGE_LABEL
+                    type: String
+                    value: myalphaservice
