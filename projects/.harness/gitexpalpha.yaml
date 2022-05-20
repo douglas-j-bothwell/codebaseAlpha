@@ -1,5 +1,5 @@
 pipeline:
-    name: gitExpAlpha
+    name: gitExpBeta
     identifier: gitexpalpha
     projectIdentifier: DougGitExpExample
     orgIdentifier: default
@@ -7,8 +7,8 @@ pipeline:
     properties:
         ci:
             codebase:
-                connectorRef: djbgithubaccount
-                repoName: codebaseAlpha
+                connectorRef: douglasjbothwellgithub
+                repoName: codebaseBeta
                 build: <+input>
     stages:
         - stage:
